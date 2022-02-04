@@ -35,7 +35,7 @@ namespace PhoneBook.Data.Repositories
         }
 
         public void Add(T entity)
-        { 
+        {
             _pbookContext.Entry(entity).State = EntityState.Added;
             // _dbSet.Add(entity);
         }
@@ -47,9 +47,17 @@ namespace PhoneBook.Data.Repositories
         }
 
         public void Update(T entity)
-        { 
+        {
             _pbookContext.Entry(entity).State = EntityState.Modified;
         }
-         
+
+        public virtual IQueryable<T> Table
+        {
+            get
+            {
+                return this._dbSet;
+            }
+        }
+
     }
 }

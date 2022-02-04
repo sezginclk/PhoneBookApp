@@ -20,7 +20,6 @@ namespace PhoneBook.Data.Model.DomainClass
 
         [StringLength(500)]
         public string Company { get; set; }
-
-        public int ContactID { get; set; }
+         
     }
 }

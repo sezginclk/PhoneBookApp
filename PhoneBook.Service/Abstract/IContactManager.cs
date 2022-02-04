@@ -7,14 +7,12 @@ using System.Text;
 
 namespace PhoneBook.Service.Abstract
 {
-    public interface IUsersManager
+    interface IContactManager
     {
-
-        List<Users> GetAll();
-        List<UsersWithDetailResponse> GetAllWithDetail();
-        Users GetById(int UUID);
-        BaseResponse Add(UserPostRequest request);
-        BaseResponse Update(UserPostRequest request);
+        List<Contacts> GetAll();
+        List<Contacts> GetById(int UUID);
+        BaseResponse Add(ContactPostRequest request);
+        BaseResponse Update(ContactPostRequest request);
         BaseResponse Delete(int UUID);
     }
 }

@@ -5,8 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="DataTransferObjects\Response\" />
-    <Folder Include="DataTransferObjects\Request\" />
+    <ProjectReference Include="..\PhoneBook.Core\PhoneBook.Core.csproj" />
   </ItemGroup>
 
 </Project>
