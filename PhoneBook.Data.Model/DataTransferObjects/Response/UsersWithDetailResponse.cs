@@ -15,6 +15,6 @@ namespace PhoneBook.Data.Model.DataTransferObjects.Response
 
         public string Company { get; set; }
 
-        public List<Contacts> Contacts { get; set; }
+        public List<Contacts> Contacts { get; set; } = new List<Contacts>();
     }
 }

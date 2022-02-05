@@ -23,7 +23,22 @@ namespace PhoneBook.Core
             {(int)ERRORCODES.SUCCESS,"İşlem Başarılı." },
             {(int)ERRORCODES.SYSTEMERROR,"Sistemde Hata Oluştu!" },
             {(int)ERRORCODES.USERNOTFOUND,"Kullanıcı bulunamadı!" },
-            {(int)ERRORCODES.CONTACTNOTFOUND,"İletişim Bilgisi bulunamadı!" },
-    };
+            {(int)ERRORCODES.CONTACTNOTFOUND,"İletişim Bilgisi bulunamadı!" }
+        };
+
+        public enum ContactType
+        {
+            PhoneNumber,
+            Mail,
+            Location
+        }
+
+        public enum ReportStatus
+        {
+            Initial = 0,
+            Working = 1,
+            Error = 2,
+            Completed = 3
+        }
     }
 }

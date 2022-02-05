@@ -17,6 +17,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhoneBook.Data.Model", "Pho
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhoneBook.Service", "PhoneBook.Service\PhoneBook.Service.csproj", "{0DCBDF8E-CC40-4915-819A-2FECC51BB7F4}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Microservices", "Microservices", "{E1ACC0F4-81D2-4A18-BCDB-7BE1008572F7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhoneBook.ReportService", "Microservices\ReportService\PhoneBook.ReportService\PhoneBook.ReportService.csproj", "{17D1FFAA-BC60-44D1-96C7-29998C5BACEF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +47,10 @@ Global
 		{0DCBDF8E-CC40-4915-819A-2FECC51BB7F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0DCBDF8E-CC40-4915-819A-2FECC51BB7F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0DCBDF8E-CC40-4915-819A-2FECC51BB7F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17D1FFAA-BC60-44D1-96C7-29998C5BACEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17D1FFAA-BC60-44D1-96C7-29998C5BACEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17D1FFAA-BC60-44D1-96C7-29998C5BACEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17D1FFAA-BC60-44D1-96C7-29998C5BACEF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -53,6 +61,7 @@ Global
 		{CCACE351-00D7-4E31-9219-3EEBEB27D6AE} = {45833979-076B-4E9F-BC25-BCBA621A1202}
 		{97ED925B-A767-4724-AB33-01794F6B1C16} = {45833979-076B-4E9F-BC25-BCBA621A1202}
 		{0DCBDF8E-CC40-4915-819A-2FECC51BB7F4} = {45833979-076B-4E9F-BC25-BCBA621A1202}
+		{17D1FFAA-BC60-44D1-96C7-29998C5BACEF} = {E1ACC0F4-81D2-4A18-BCDB-7BE1008572F7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1076DE6D-EFA5-4CFA-A71A-6CB0CCA1458D}

@@ -1,7 +1,7 @@
-﻿using PhoneBook.Data.Contexts;
+﻿using Microsoft.EntityFrameworkCore;
+using PhoneBook.Data.Contexts;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Text;
 

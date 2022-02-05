@@ -7,7 +7,7 @@ using System.Text;
 
 namespace PhoneBook.Service.Abstract
 {
-    interface IContactManager
+    public interface IContactManager
     {
         List<Contacts> GetAll();
         List<Contacts> GetById(int UUID);

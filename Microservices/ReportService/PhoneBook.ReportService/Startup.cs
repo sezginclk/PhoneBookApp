@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -8,15 +7,12 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using PhoneBook.Core.MqServices.RabbitMq;
-using PhoneBook.Service.Abstract;
-using PhoneBook.Service.Concrete;
-using PhoneBookApp.Controllers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PhoneBookApp
+namespace PhoneBook.ReportService
 {
     public class Startup
     {
@@ -31,8 +27,6 @@ namespace PhoneBookApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddDependencyToService();
-
             services.Configure<RabbitMqSettings>(Configuration.GetSection("RabbitMqSettings"));
 
             services.AddCap(x =>
@@ -49,18 +43,6 @@ namespace PhoneBookApp
                     settings.Password = rabbitMqSettings.Password;
                 });
             });
-
-            services.AddSwaggerGen(c =>
-            {
-                // c.EnableAnnotations();
-                c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
-                {
-                    Version = "v1",
-                    Title = "PhoneBook",
-                    Description = "Api",
-                    Contact = new Microsoft.OpenApi.Models.OpenApiContact() { Name = "Sezgin Çolak", Email = "sezgincolak90@gmail.com", Url = new Uri("https://github.com/sezginclk") }
-                });
-            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -70,8 +52,6 @@ namespace PhoneBookApp
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            app.UseHttpsRedirection();
 
             app.UseRouting();
 

@@ -12,7 +12,7 @@ using System.Linq;
 
 namespace PhoneBook.Service.Concrete
 {
-    class ContactManager : IContactManager
+    public class ContactManager : IContactManager
     {
         readonly IUsersDal _usersDal;
         readonly IContactsDal _contactsDal;

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using static PhoneBook.Core.Constants;
 
 namespace PhoneBook.Data.Model.DataTransferObjects.Request
 {
@@ -11,12 +12,5 @@ namespace PhoneBook.Data.Model.DataTransferObjects.Request
         public ContactType ContactType { get; set; }
 
         public string Contact { get; set; }
-    }
-
-    public enum ContactType
-    {
-        PhoneNumber,
-        Mail,
-        Location
     }
 }

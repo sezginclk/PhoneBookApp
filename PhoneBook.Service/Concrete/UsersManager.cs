@@ -18,15 +18,17 @@ namespace PhoneBook.Service.Concrete
         readonly IContactsDal _contactsDal;
         readonly IUnitOfWork _unitOfWork;
         readonly PBookContext _pbookContext;
+        readonly IContactManager _contactManager;
 
         // Başlangıçta ihtiyaç duyacağımız bağımlılıkları yapıcı method'ta belirlememiz gerekiyor.
         // Hangi Data Access Layer lara ihtiyacın var belirle.
-        public UsersManager(PBookContext pbookContext, IUsersDal usersDal, IUnitOfWork unitOfWork, IContactsDal contactsDal)
+        public UsersManager(PBookContext pbookContext, IUsersDal usersDal, IUnitOfWork unitOfWork, IContactsDal contactsDal, IContactManager contactManager)
         {
             _unitOfWork = unitOfWork;
             _usersDal = usersDal;
             _contactsDal = contactsDal;
             _pbookContext = pbookContext;
+            _contactManager = contactManager;
         }
 
         public List<Users> GetAll()
@@ -71,8 +73,8 @@ namespace PhoneBook.Service.Concrete
                         {
                             usersWithDetail.Contacts.Add(contact);
                         }
-                    } 
-                } 
+                    }
+                }
 
                 return response;
             }
@@ -114,6 +116,18 @@ namespace PhoneBook.Service.Concrete
                 _unitOfWork.SaveChanges();
 
 
+
+                //kişiye ait iletişim bilgileri eklenecek
+                if (request.Contact != "" && request.Contact != null)
+                {
+                    ContactPostRequest contactPostRequest = new ContactPostRequest();
+                    contactPostRequest.ContactType = request.ContactType;
+                    contactPostRequest.Contact = request.Contact;
+                    contactPostRequest.UUID = user.UUID;
+                    _contactManager.Add(contactPostRequest);
+                }
+
+
                 response.SetErrorToResponse(Core.Constants.ERRORCODES.SUCCESS);
                 return response;
 
@@ -143,6 +157,18 @@ namespace PhoneBook.Service.Concrete
 
                     _usersDal.Update(userCheck);
                     _unitOfWork.SaveChanges();
+
+
+
+                    //kişiye ait iletişim blgileri güncellenecek
+                    if (request.Contact != "" && request.Contact != null)
+                    {
+                        ContactPostRequest contactPostRequest = new ContactPostRequest();
+                        contactPostRequest.ContactType = request.ContactType;
+                        contactPostRequest.Contact = request.Contact;
+                        contactPostRequest.UUID = userCheck.UUID;
+                        _contactManager.Update(contactPostRequest);
+                    }
 
 
                     response.SetErrorToResponse(Core.Constants.ERRORCODES.SUCCESS);
@@ -176,6 +202,9 @@ namespace PhoneBook.Service.Concrete
                 {
                     _usersDal.Delete(user);
                     _unitOfWork.SaveChanges();
+
+                    //kişiye ait iletişim blgileri silinecek
+                    _contactManager.Delete(user.UUID);
 
                     response.SetErrorToResponse(Core.Constants.ERRORCODES.SUCCESS);
                     return response;
