@@ -14,7 +14,8 @@ namespace PhoneBook.Core
             SUCCESS = 0,
             SYSTEMERROR = 1,
             USERNOTFOUND = 2,
-            CONTACTNOTFOUND = 3
+            CONTACTNOTFOUND = 3,
+            LOCATIONNOTFOUND = 4
         }
 
 
@@ -23,7 +24,8 @@ namespace PhoneBook.Core
             {(int)ERRORCODES.SUCCESS,"İşlem Başarılı." },
             {(int)ERRORCODES.SYSTEMERROR,"Sistemde Hata Oluştu!" },
             {(int)ERRORCODES.USERNOTFOUND,"Kullanıcı bulunamadı!" },
-            {(int)ERRORCODES.CONTACTNOTFOUND,"İletişim Bilgisi bulunamadı!" }
+            {(int)ERRORCODES.CONTACTNOTFOUND,"İletişim Bilgisi bulunamadı!" },
+            {(int)ERRORCODES.LOCATIONNOTFOUND,"Lokasyon Bilgisi bulunamadı!" }
         };
 
         public enum ContactType

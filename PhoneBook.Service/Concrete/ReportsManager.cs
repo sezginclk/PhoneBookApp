@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using PhoneBook.Data.Model.DataTransferObjects.Request;
+using static PhoneBook.Core.Constants;
 
 namespace PhoneBook.Service.Concrete
 {
@@ -17,13 +18,14 @@ namespace PhoneBook.Service.Concrete
         readonly IReportsDal _reportsDal;
         readonly IReportContentDal _reportContentDal;
         readonly IContactsDal _contactsDal;
+        readonly IUsersDal _usersDal;
         readonly IUnitOfWork _unitOfWork;
         readonly PBookContext _pbookContext;
         readonly IContactManager _contactManager;
 
         // Başlangıçta ihtiyaç duyacağımız bağımlılıkları yapıcı method'ta belirlememiz gerekiyor.
         // Hangi Data Access Layer lara ihtiyacın var belirle.
-        public ReportsManager(IReportsDal reportsDal, PBookContext pbookContext, IUnitOfWork unitOfWork, IContactsDal contactsDal, IContactManager contactManager, IReportContentDal reportContentDal)
+        public ReportsManager(IReportsDal reportsDal, PBookContext pbookContext, IUnitOfWork unitOfWork, IContactsDal contactsDal, IContactManager contactManager, IReportContentDal reportContentDal, IUsersDal usersDal)
         {
             _reportsDal = reportsDal;
             _unitOfWork = unitOfWork;
@@ -31,6 +33,7 @@ namespace PhoneBook.Service.Concrete
             _pbookContext = pbookContext;
             _contactManager = contactManager;
             _reportContentDal = reportContentDal;
+            _usersDal = usersDal;
         }
 
         public List<Reports> GetAll()
@@ -80,7 +83,7 @@ namespace PhoneBook.Service.Concrete
             }
         }
 
-        public ReportResponse Add()
+        public ReportResponse Add(int personId)
         {
             ReportResponse response = new ReportResponse();
             Reports report = new Reports();
@@ -93,7 +96,14 @@ namespace PhoneBook.Service.Concrete
                 _reportsDal.Add(report);
                 _unitOfWork.SaveChanges();
 
+                response.Location = _contactsDal.Table.Where(t => t.UUID == personId && t.InformationType == (int)ContactType.Location).FirstOrDefault().Information;
                 response.Id = report.Id;
+
+                //kşiye ait konum bilgisi yoksa.
+                if (response.Location==null || response.Location=="") {
+                    response.SetErrorToResponse(Core.Constants.ERRORCODES.LOCATIONNOTFOUND);
+                    return response;
+                }
 
                 response.SetErrorToResponse(Core.Constants.ERRORCODES.SUCCESS);
                 return response;

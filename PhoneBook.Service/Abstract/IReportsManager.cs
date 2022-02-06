@@ -12,7 +12,7 @@ namespace PhoneBook.Service.Abstract
         List<Reports> GetAll();
         //List<UsersWithDetailResponse> GetAllWithDetail();
         ReportContentReponse GetById(int reportId);
-        ReportResponse Add();
+        ReportResponse Add(int personId);
         BaseResponse Update(ReportRequest request);
         BaseResponse CreateReport(CreateReportRequest request);
     }

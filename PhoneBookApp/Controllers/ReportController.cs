@@ -29,12 +29,12 @@ namespace PhoneBookApp.Controllers
 
         [HttpPost("Add")]
         [SwaggerOperation(Summary = "Rapor Yaratma İşlemi", Description = "Rapor Yaratma İşlemi için kullanılır.")]
-        public BaseResponse CreateReport()
+        public BaseResponse CreateReport(int personId)
         {  
-            ReportResponse operationReport = _reportsManager.Add();
+            ReportResponse operationReport = _reportsManager.Add(personId);
             if (operationReport.Code == (int)ERRORCODES.SUCCESS)
             {
-                _capBus.Publish("PhoneBook.Report.Create.DetailedLocationReport", new CreateDetailedLocationReportCommand() { ReportId = operationReport.Id });
+                _capBus.Publish("PhoneBook.Report.Create.DetailedLocationReport", new CreateDetailedLocationReportCommand() { ReportId = operationReport.Id,Location=operationReport.Location });
                 
             }
 
