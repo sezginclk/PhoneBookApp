@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using PhoneBook.Data.Contexts;
+using PhoneBook.Data.Repositories.Abstract;
+using PhoneBook.Data.Repositories.Concrete;
 using PhoneBook.Data.UnitOfWork;
 using PhoneBook.Service.Abstract;
 using PhoneBook.Service.Concrete;
@@ -16,8 +18,14 @@ namespace PhoneBook.ReportService
         {
             #region ContainerObject
 
+            services.AddScoped<IUsersManager, UsersManager>();
+            services.AddScoped<IUsersDal, UsersDal>();
+            services.AddScoped<IReportsDal, ReportsDal>();
+            services.AddScoped<IReportContentDal, ReportContentDal>();
             services.AddScoped<IReportsManager, ReportsManager>();
+            services.AddScoped<IContactsDal, ContactsDal>();
             services.AddScoped<IUnitOfWork, EFUnitOfWork>();
+            services.AddScoped<IContactManager, ContactManager>();
             services.AddScoped<PBookContext>();
 
 

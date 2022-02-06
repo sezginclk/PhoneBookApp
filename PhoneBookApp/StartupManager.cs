@@ -20,6 +20,8 @@ namespace PhoneBookApp
 
             services.AddScoped<IUsersManager, UsersManager>();
             services.AddScoped<IUsersDal, UsersDal>();
+            services.AddScoped<IReportsDal, ReportsDal>();
+            services.AddScoped<IReportContentDal, ReportContentDal>();
             services.AddScoped<IReportsManager, ReportsManager>();
             services.AddScoped<IContactsDal, ContactsDal>();
             services.AddScoped<IUnitOfWork, EFUnitOfWork>();

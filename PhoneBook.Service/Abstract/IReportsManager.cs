@@ -14,5 +14,6 @@ namespace PhoneBook.Service.Abstract
         ReportContentReponse GetById(int reportId);
         ReportResponse Add();
         BaseResponse Update(ReportRequest request);
+        BaseResponse CreateReport(CreateReportRequest request);
     }
 }

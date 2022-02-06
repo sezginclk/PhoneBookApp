@@ -66,8 +66,7 @@ namespace PhoneBook.Service.Concrete
                 if (response.Status == Core.Constants.ReportStatus.Completed)
                 {
                     reportContent = _reportContentDal.Table.Where(t => t.Id == reportId).FirstOrDefault();
-                    response.LocationX = reportContent.LocationX;
-                    response.LocationY = reportContent.LocationY;
+                    response.Location = reportContent.Location;
                     response.NumberInLocation = reportContent.NumberInLocation;
                     response.PersonInLocation = reportContent.PersonInLocation;
 
@@ -122,6 +121,62 @@ namespace PhoneBook.Service.Concrete
 
                 _reportsDal.Update(report);
                 _unitOfWork.SaveChanges();
+
+                response.SetErrorToResponse(Core.Constants.ERRORCODES.SUCCESS);
+                return response;
+
+            }
+            catch (Exception)
+            {
+
+                response.SetErrorToResponse(Core.Constants.ERRORCODES.SYSTEMERROR);
+                return response;
+            }
+        }
+
+        public BaseResponse CreateReport(CreateReportRequest request)
+        {
+            BaseResponse response = new BaseResponse();
+            ReportContent reportContent = new ReportContent();
+            List<Contacts> contacts = new List<Contacts>();
+            List<Contacts> allContacts = new List<Contacts>();
+            List<int> personNumbers = new List<int>();
+            int numberCount = 0;
+
+            try
+            {
+                allContacts = _contactsDal.Table.ToList();
+                contacts = _contactsDal.Table.Where(t => t.Information == request.Location).ToList();
+
+                reportContent.Id = request.ReportId;
+                reportContent.Location = request.Location;
+
+
+                //kişileri ayırt etmek için group by ve içeriği UUID olarak kullandık.
+                reportContent.PersonInLocation = contacts.GroupBy(t => t.UUID).Count();
+
+
+                //konumda olan kişilerin listesi alındı
+                personNumbers = contacts.Where(t => t.Information == request.Location).Select(t => t.UUID).Distinct().ToList();
+                foreach (var personNumber in personNumbers)
+                {
+                    //liste içerisinde dönülüp kişilere ait telefon numrası sayıları alındı.
+                    numberCount += allContacts.Where(t => t.UUID == personNumber && t.InformationType == (int)Core.Constants.ContactType.PhoneNumber).GroupBy(t => t.Information).Count();
+                }
+
+                reportContent.NumberInLocation = numberCount;
+
+
+
+                _reportContentDal.Add(reportContent);
+                int result = _unitOfWork.SaveChanges();
+
+                //işlemin sonucuna göre raporlar tablosu güncelleniyor.
+                if (result < 1) { _reportsDal.Update(new Reports() { Id = request.ReportId, Status = Core.Constants.ReportStatus.Error }); }
+                if (result > 0) { _reportsDal.Update(new Reports() { Id = request.ReportId, Status = Core.Constants.ReportStatus.Completed }); }
+
+
+
 
                 response.SetErrorToResponse(Core.Constants.ERRORCODES.SUCCESS);
                 return response;

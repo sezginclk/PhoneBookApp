@@ -6,9 +6,7 @@ namespace PhoneBook.Data.Model.DataTransferObjects.Response
 {
     public class ReportContentReponse : BaseResponse
     {
-        public int LocationX { get; set; }
-
-        public int LocationY { get; set; }
+        public string Location { get; set; }
 
         public int PersonInLocation { get; set; }
 
