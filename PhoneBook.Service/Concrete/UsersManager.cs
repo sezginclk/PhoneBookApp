@@ -40,12 +40,42 @@ namespace PhoneBook.Service.Concrete
                 users = _usersDal.Table.ToList();
                 return users;
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return null;
             }
         }
 
+        public UsersWithDetailResponse GetById(int UUID)
+        {
+            Users user = new Users();
+            UsersWithDetailResponse usersWithDetail = new UsersWithDetailResponse();
+
+            try
+            {
+                user = _usersDal.Table.Where(t => t.UUID == UUID).FirstOrDefault();
+                usersWithDetail.Name = user.Name;
+                usersWithDetail.Surname = user.Surname;
+                usersWithDetail.Company = user.Company;
+
+                List<Contacts> contacts = new List<Contacts>();
+                contacts = _contactsDal.Table.Where(t => t.UUID == user.UUID).ToList();
+                if (contacts.Count > 0)
+                {
+                    foreach (var contact in contacts)
+                    {
+                        usersWithDetail.Contacts.Add(contact);
+                    }
+                }
+
+
+                return usersWithDetail;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
 
         public List<UsersWithDetailResponse> GetAllWithDetail()
         {
@@ -84,20 +114,6 @@ namespace PhoneBook.Service.Concrete
             }
         }
 
-        public Users GetById(int UUID)
-        {
-            Users users = new Users();
-
-            try
-            {
-                users = _usersDal.Table.Where(t => t.UUID == UUID).FirstOrDefault();
-                return users;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-        }
 
         public BaseResponse Add(UserPostRequest request)
         {

@@ -3,20 +3,21 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
-using static PhoneBook.Core.Constants;
 
 namespace PhoneBook.Data.Model.DomainClass
 {
-    public partial class Reports
+    public partial class ReportContent
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        public DateTime Date { get; set; }
+        public int LocationX { get; set; }
 
-        public ReportStatus Status { get; set; }
+        public int LocationY { get; set; }
+
+        public int PersonInLocation { get; set; }
+
+        public int NumberInLocation { get; set; }
     }
-
-
 }

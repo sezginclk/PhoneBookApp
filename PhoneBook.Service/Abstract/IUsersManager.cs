@@ -12,7 +12,7 @@ namespace PhoneBook.Service.Abstract
 
         List<Users> GetAll();
         List<UsersWithDetailResponse> GetAllWithDetail();
-        Users GetById(int UUID);
+        UsersWithDetailResponse GetById(int UUID);
         BaseResponse Add(UserPostRequest request);
         BaseResponse Update(UserPostRequest request);
         BaseResponse Delete(int UUID);

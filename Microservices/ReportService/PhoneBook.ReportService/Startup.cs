@@ -27,8 +27,8 @@ namespace PhoneBook.ReportService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.Configure<RabbitMqSettings>(Configuration.GetSection("RabbitMqSettings"));
-
+            services.Configure<RabbitMqSettings>(Configuration.GetSection("RabbitMqSettings")); 
+            services.AddDependencyToService();
             services.AddCap(x =>
             {
                 //x.FailedRetryCount = 3;

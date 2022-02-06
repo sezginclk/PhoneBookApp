@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\PhoneBook.Data.Model\PhoneBook.Data.Model.csproj" />
+    <ProjectReference Include="..\..\..\PhoneBook.Service\PhoneBook.Service.csproj" />
   </ItemGroup>
 
 

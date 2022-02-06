@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PhoneBook.Data.Model.DataTransferObjects.Command;
+using PhoneBook.Service.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,12 +15,12 @@ namespace PhoneBook.ReportService.Controllers
     public class ReportController : ControllerBase
     {
         private readonly ILogger<ReportController> _logger;
-
-        public ReportController(ILogger<ReportController> logger)
+        IReportsManager _reportsManager; 
+        public ReportController(ILogger<ReportController> logger, IReportsManager reportsManager )
         {
-            _logger = logger;
-        }
-
+            _logger = logger; 
+            _reportsManager = reportsManager;
+        } 
 
         [CapSubscribe("PhoneBook.Report.Create.DetailedLocationReport")]
         public void CreateDetailedLocationReport(CreateDetailedLocationReportCommand command)

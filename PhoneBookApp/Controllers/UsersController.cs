@@ -1,4 +1,5 @@
 ﻿using DotNetCore.CAP;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PhoneBook.Data.Model.DataTransferObjects.Command;
 using PhoneBook.Data.Model.DataTransferObjects.Request;
@@ -10,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static PhoneBook.Core.Constants;
 
 namespace PhoneBookApp.Controllers
 {
@@ -27,7 +29,7 @@ namespace PhoneBookApp.Controllers
 
 
         [Route("GetAll")]
-        [HttpPost]
+        [HttpGet]
         [SwaggerOperation(Summary = "User listesini getir.", Description = "Tüm user listesini getirmek için kullanılır.")]
         public List<Users> GetAll()
         {
@@ -36,11 +38,21 @@ namespace PhoneBookApp.Controllers
         }
 
         [Route("GetAllWithDetail")]
-        [HttpPost]
+        [HttpGet]
         [SwaggerOperation(Summary = "User listesini detayları ile birlikte getir.", Description = "Tüm user listesini detayları ile birlikte getirmek için kullanılır.")]
         public List<UsersWithDetailResponse> GetAllWithDetail()
         {
             List<UsersWithDetailResponse> result = _userManager.GetAllWithDetail();
+            return result;
+        }
+
+
+        [Route("GetById")]
+        [HttpGet]
+        [SwaggerOperation(Summary = "Bir Userı detayları ile birlikte getir.", Description = "Bir userı detayları ile birlikte getirmek için kullanılır.")]
+        public UsersWithDetailResponse GetById(int UUID)
+        {
+            UsersWithDetailResponse result = _userManager.GetById(UUID);
             return result;
         }
 
@@ -54,7 +66,7 @@ namespace PhoneBookApp.Controllers
         }
 
         [Route("Update")]
-        [HttpPost]
+        [HttpPatch]
         [SwaggerOperation(Summary = "User güncelleme işlemi", Description = "User güncelleme işlemi için kullanılır")]
         public BaseResponse Update([FromBody] UserPostRequest request)
         {
@@ -71,12 +83,5 @@ namespace PhoneBookApp.Controllers
             return result;
         }
 
-        [HttpGet("CreateReport")]
-        [SwaggerOperation(Summary = "User listesini getir.", Description = "Tüm user listesini getirmek için kullanılır.")]
-        public IActionResult CreateReport()
-        {
-            _capBus.Publish("PhoneBook.Report.Create.DetailedLocationReport", new CreateDetailedLocationReportCommand() { ReportId = 1 });
-            return Ok();
-        }
     }
 }

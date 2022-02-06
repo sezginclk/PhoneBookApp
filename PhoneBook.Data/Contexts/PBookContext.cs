@@ -9,21 +9,21 @@ namespace PhoneBook.Data.Contexts
 {
     public class PBookContext : DbContext
     {
+
+        //private string _connectionString;
         //private readonly IConfiguration _config;
         //public PBookContext(string connectionString, IConfiguration config) : base()
         //{
         //    _config = config;
         //}
 
-        //public PBookContext(IConfiguration config)
+        //public PBookContext()
         //{
-        //    _config = config;
+
         //}
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-          
-            //optionsBuilder.UseNpgsql("User ID=TestUser;Password=SecuredPassword!123;Host=localhost;Port=5432;Database=PhoneBookDb;");
             optionsBuilder.UseNpgsql("Server=localhost;Port=5432;Userid=TestUser;Password=SecuredPassword!123;Database=PhoneBookDb");
             base.OnConfiguring(optionsBuilder);
         }
@@ -32,6 +32,7 @@ namespace PhoneBook.Data.Contexts
         public virtual DbSet<Users> Users { get; set; }
         public virtual DbSet<Contacts> Contacts { get; set; }
         public virtual DbSet<Reports> Reports { get; set; }
+        public virtual DbSet<ReportContent> ReportContents { get; set; }
         #endregion
     }
 }
