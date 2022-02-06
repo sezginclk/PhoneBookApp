@@ -8,11 +8,12 @@ using static PhoneBook.Core.Constants;
 namespace PhoneBook.Data.Model.DomainClass
 {
     public partial class Reports
-    { 
-        public int UUID { get; set; }
+    {
+        [Key]
+        public Guid Id { get; set; }
 
         public DateTime Date { get; set; }
-         
+
         public ReportStatus Status { get; set; }
     }
 

@@ -39,7 +39,7 @@ namespace PhoneBookApp
             {
                 //x.FailedRetryCount = 3;
                 //x.FailedRetryInterval = 600;
-
+                x.UseInMemoryStorage();
                 var rabbitMqSettings = services.BuildServiceProvider().GetService<IOptions<RabbitMqSettings>>().Value;
                 x.UseRabbitMQ(settings =>
                 {
@@ -70,6 +70,8 @@ namespace PhoneBookApp
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseSwagger();
 
             app.UseHttpsRedirection();
 

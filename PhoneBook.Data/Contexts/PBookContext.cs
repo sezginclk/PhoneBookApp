@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using PhoneBook.Data.Model.DomainClass;
 using System;
 using System.Collections.Generic;
@@ -8,20 +9,22 @@ namespace PhoneBook.Data.Contexts
 {
     public class PBookContext : DbContext
     {
-        public PBookContext(string connectionString) : base()
-        {
-            
-        }
+        //private readonly IConfiguration _config;
+        //public PBookContext(string connectionString, IConfiguration config) : base()
+        //{
+        //    _config = config;
+        //}
 
-        public PBookContext()
-        {
-
-        }
+        //public PBookContext(IConfiguration config)
+        //{
+        //    _config = config;
+        //}
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql("");
-
+          
+            //optionsBuilder.UseNpgsql("User ID=TestUser;Password=SecuredPassword!123;Host=localhost;Port=5432;Database=PhoneBookDb;");
+            optionsBuilder.UseNpgsql("Server=localhost;Port=5432;Userid=TestUser;Password=SecuredPassword!123;Database=PhoneBookDb");
             base.OnConfiguring(optionsBuilder);
         }
 

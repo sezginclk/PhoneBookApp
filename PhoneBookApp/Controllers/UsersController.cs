@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DotNetCore.CAP;
+using Microsoft.AspNetCore.Mvc;
+using PhoneBook.Data.Model.DataTransferObjects.Command;
 using PhoneBook.Data.Model.DataTransferObjects.Request;
 using PhoneBook.Data.Model.DataTransferObjects.Response;
 using PhoneBook.Data.Model.DomainClass;
@@ -16,9 +18,11 @@ namespace PhoneBookApp.Controllers
     public class UsersController : Controller
     {
         IUsersManager _userManager;
-        public UsersController(IUsersManager userManager)
+        private readonly ICapPublisher _capBus;
+        public UsersController(IUsersManager userManager, ICapPublisher capBus)
         {
             _userManager = userManager;
+            _capBus = capBus;
         }
 
 
@@ -65,6 +69,14 @@ namespace PhoneBookApp.Controllers
         {
             BaseResponse result = _userManager.Delete(UUID);
             return result;
+        }
+
+        [HttpGet("CreateReport")]
+        [SwaggerOperation(Summary = "User listesini getir.", Description = "Tüm user listesini getirmek için kullanılır.")]
+        public IActionResult CreateReport()
+        {
+            _capBus.Publish("PhoneBook.Report.Create.DetailedLocationReport", new CreateDetailedLocationReportCommand() { ReportId = 1 });
+            return Ok();
         }
     }
 }

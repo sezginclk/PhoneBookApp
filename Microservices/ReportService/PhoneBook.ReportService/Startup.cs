@@ -33,7 +33,7 @@ namespace PhoneBook.ReportService
             {
                 //x.FailedRetryCount = 3;
                 //x.FailedRetryInterval = 600;
-
+                x.UseInMemoryStorage();
                 var rabbitMqSettings = services.BuildServiceProvider().GetService<IOptions<RabbitMqSettings>>().Value;
                 x.UseRabbitMQ(settings =>
                 {
