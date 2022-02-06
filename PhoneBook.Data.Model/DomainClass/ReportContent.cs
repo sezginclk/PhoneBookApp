@@ -12,10 +12,7 @@ namespace PhoneBook.Data.Model.DomainClass
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        public string Location { get; set; }
+        public string ExcelLocation { get; set; }
 
-        public int PersonInLocation { get; set; }
-
-        public int NumberInLocation { get; set; }
     }
 }

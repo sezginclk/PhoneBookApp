@@ -10,6 +10,9 @@ using System.Text;
 using System.Linq;
 using PhoneBook.Data.Model.DataTransferObjects.Request;
 using static PhoneBook.Core.Constants;
+using Excel = Microsoft.Office.Interop.Excel;
+using System.IO;
+using PhoneBook.Data.Model.DataTransferObjects.DTO;
 
 namespace PhoneBook.Service.Concrete
 {
@@ -69,9 +72,7 @@ namespace PhoneBook.Service.Concrete
                 if (response.Status == Core.Constants.ReportStatus.Completed)
                 {
                     reportContent = _reportContentDal.Table.Where(t => t.Id == reportId).FirstOrDefault();
-                    response.Location = reportContent.Location;
-                    response.NumberInLocation = reportContent.NumberInLocation;
-                    response.PersonInLocation = reportContent.PersonInLocation;
+                    response.Location = reportContent.ExcelLocation;
 
                 }
 
@@ -147,7 +148,7 @@ namespace PhoneBook.Service.Concrete
         public BaseResponse CreateReport(CreateReportRequest request)
         {
             BaseResponse response = new BaseResponse();
-            ReportContent reportContent = new ReportContent();
+            ReportContentDTO reportContent = new ReportContentDTO();
             List<Contacts> contacts = new List<Contacts>();
             List<Contacts> allContacts = new List<Contacts>();
             List<int> personNumbers = new List<int>();
@@ -178,12 +179,32 @@ namespace PhoneBook.Service.Concrete
 
 
 
-                _reportContentDal.Add(reportContent);
-                int result = _unitOfWork.SaveChanges();
+                //excel işlemleri
+                var excel = new Excel.Application();
+
+                var workBooks = excel.Workbooks;
+                var workBook = workBooks.Add();
+                var workSheet = (Excel.Worksheet)excel.ActiveSheet;
+
+
+                workSheet.Cells[1, "Konum"] = reportContent.Location;
+                workSheet.Cells[1, "Rehbere Kayıtlı Kişi Sayısı"] = reportContent.PersonInLocation;
+                workSheet.Cells[1, "Rehbere Kayıtlı Telefon Numarası Sayısı"] = reportContent.NumberInLocation;
+
+                // report Id si ile isimlendirilerek kaydediyor.
+                workBook.SaveAs(Directory.GetCurrentDirectory() + "\\" + $"{reportContent.Id}", Excel.XlFileFormat.xlOpenXMLWorkbook);
+
+
+                //ReportId ve Excel Konumu kaydedliyor..
+                ReportContent reportResult = new ReportContent();
+                reportResult.Id = reportContent.Id;
+                reportResult.ExcelLocation = Directory.GetCurrentDirectory() + "\\" + $"{reportContent.Id}";
+                _reportContentDal.Add(reportResult);
+                _unitOfWork.SaveChanges();
+
 
                 //işlemin sonucuna göre raporlar tablosu güncelleniyor.
-                if (result < 1) { _reportsDal.Update(new Reports() { Id = request.ReportId, Status = Core.Constants.ReportStatus.Error }); }
-                if (result > 0) { _reportsDal.Update(new Reports() { Id = request.ReportId, Status = Core.Constants.ReportStatus.Completed }); }
+                _reportsDal.Update(new Reports() { Id = request.ReportId, Status = Core.Constants.ReportStatus.Completed });
 
 
 
@@ -195,6 +216,8 @@ namespace PhoneBook.Service.Concrete
             catch (Exception)
             {
 
+                //işlemin sonucuna göre raporlar tablosu güncelleniyor.
+                _reportsDal.Update(new Reports() { Id = request.ReportId, Status = Core.Constants.ReportStatus.Error }); 
                 response.SetErrorToResponse(Core.Constants.ERRORCODES.SYSTEMERROR);
                 return response;
             }
