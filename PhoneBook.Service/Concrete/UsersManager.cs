@@ -21,7 +21,7 @@ namespace PhoneBook.Service.Concrete
         readonly IContactManager _contactManager;
 
         // Başlangıçta ihtiyaç duyacağımız bağımlılıkları yapıcı method'ta belirlememiz gerekiyor.
-        // Hangi Data Access Layer lara ihtiyacın var belirle.
+        // Hangi Data Access Layer lara ihtiyacın var.
         public UsersManager(PBookContext pbookContext, IUsersDal usersDal, IUnitOfWork unitOfWork, IContactsDal contactsDal, IContactManager contactManager)
         {
             _unitOfWork = unitOfWork;

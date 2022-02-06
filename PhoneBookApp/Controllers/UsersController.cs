@@ -50,7 +50,7 @@ namespace PhoneBookApp.Controllers
         [Route("GetById")]
         [HttpGet]
         [SwaggerOperation(Summary = "Bir Userı detayları ile birlikte getir.", Description = "Bir userı detayları ile birlikte getirmek için kullanılır.")]
-        public UsersWithDetailResponse GetById(int UUID)
+        public UsersWithDetailResponse GetById([FromBody] int UUID)
         {
             UsersWithDetailResponse result = _userManager.GetById(UUID);
             return result;
@@ -77,7 +77,7 @@ namespace PhoneBookApp.Controllers
         [Route("Delete")]
         [HttpDelete]
         [SwaggerOperation(Summary = "User silme işlemi", Description = "User silme işlemi için kullanılır.")]
-        public BaseResponse Delete(int UUID)
+        public BaseResponse Delete([FromBody] int UUID)
         {
             BaseResponse result = _userManager.Delete(UUID);
             return result;
