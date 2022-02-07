@@ -116,5 +116,14 @@ namespace Test_PhoneBookApp
             Assert.IsNotNull(_pbookContext.Reports.ToList());
         }
 
+        [TestMethod]
+        public void ReportManagerUpdateShouldUpdateReportToDatabase()
+        {
+            _reportsManager.Update(new ReportRequest() {  ReportId=1,Status=ReportStatus.Working });
+            //güncelleme iþlemi sonunda 1 numaralý ID nin böyle bir rapor kaydý varsa doðru tamamlanacak.
+            //eðer güncelleme yapmadýysa veri olmayacaðýndan veya eski rapor kaydý olacaðýndan hatalý olacak veya olma ihtimali var
+            Assert.IsNotNull(_pbookContext.Reports.Where(t=>t.Id==1&&t.Status==ReportStatus.Working).FirstOrDefault());
+        }
+
     }
 }
