@@ -198,7 +198,7 @@ namespace PhoneBook.Service.Concrete
                 //ReportId ve Excel Konumu kaydedliyor..
                 ReportContent reportResult = new ReportContent();
                 reportResult.Id = reportContent.Id;
-                reportResult.ExcelLocation = Directory.GetCurrentDirectory() + "\\" + $"{reportContent.Id}";
+                reportResult.ExcelLocation = Directory.GetCurrentDirectory() + "\\" + $"{reportContent.Id}"+ ".xls";
                 _reportContentDal.Add(reportResult);
                 _unitOfWork.SaveChanges();
 
