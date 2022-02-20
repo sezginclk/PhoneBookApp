@@ -10,7 +10,7 @@ Docker ise 'docker-compose up -d' ile ayağa kalkacaktır.
 
 Proje içerisinde PostgreSql kullanılmıştır.
 Mesaj Queue işlemi için Cap üzerinden RabbitMq kullanılmıştır.
-İki mikroservisinde DB leri ortaktır. Vakit darlığı sebebiyle ortak olarak kullanılmıştır. Eğer bir firma çalışması vs olsaydı muhtemelen ayrı yapıp mongodb ya da herhangi bir nosql veri tabanı kullanabilirdim.
+İki mikroservisinde DB leri ortaktır.  Eğer bir firma çalışması vs olsaydı muhtemelen ayrı yapıp mongodb ya da herhangi bir nosql veri tabanı kullanabilirdniz.
 
 
 
